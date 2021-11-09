@@ -1,0 +1,12 @@
+<buttom [routerLink]= "['/curso_edicion',i_curso._id]" role="button">
+    <div class="row justify-content-center align-items-center background-color-{{colorDiv}} p-5">
+        <div class="col-4">{{i_curso.nombre}}</div>
+        <div class="col-6 text-center">
+            Promedio hasta ahora : {{i_curso.promedio}}
+        </div>
+        <div class="col-2 text-center">
+            <i *ngIf="i_curso.promedio>6" class="far fa-smile-beam carita"></i>
+            <i *ngIf="i_curso.promedio<=6" class="far fa-sad-cry carita"></i>
+        </div>
+    </div>
+</buttom>

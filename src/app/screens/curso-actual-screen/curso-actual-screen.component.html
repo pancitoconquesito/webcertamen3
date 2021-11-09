@@ -1,0 +1,55 @@
+<div class="container border ">
+    <div class="row">
+        <div class="text-center my-5">
+            <h3>Editar Curso</h3>
+        </div>
+        <div class="col-12">
+            <form  [formGroup]="formulario" (ngSubmit)="validar()" novalidate>
+                <div class="m-3 col-sm-12 col-lg-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre"
+                    formControlName="nombre">
+                    <div *ngIf="formulario.controls['nombre'].invalid && (formulario.controls['nombre'].touched || formulario.controls['nombre'].dirty)" 
+                        class="alert alert-danger">
+                        <div *ngIf="formulario.controls['nombre'].hasError('required')">Campo es obligatorio</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row my-4">
+                    <div class="col-6">
+                        <a (click)="addNota()" class="border m-5 p-2 text-decoration-none">Agregar Nota</a>
+                    </div>
+                </div>
+                <div class="row shadow p-1 border rounded">
+                    <div *ngFor="let cardNota of listaNotas">
+                        <div class="border p-2 rounded my-2">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label">Nota</label>
+                                    <input [ngModelOptions]="{standalone: true}"
+                                    type="text" class="form-control" [(ngModel)]="cardNota.nota">
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label">Porcentaje</label>
+                                    <input [ngModelOptions]="{standalone: true}" 
+                                    type="text" class="form-control" [(ngModel)]="cardNota.porcentaje">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="text-center my-2">
+                                    <button (click)="eliminarNota(cardNota._id)" class="col-8 text-center">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row m-5">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary col-5">Aceptar Cambios</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
