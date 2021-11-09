@@ -16,7 +16,9 @@ export class CursoActualScreenComponent implements OnInit {
   cursoActual:Curso;
   idGenerador:number;
   listaNotas:Array<Nota>=[];
+  fomularioCompletado:boolean;
   constructor(private ruta:ActivatedRoute, private cursoservicio:CursoServiceService, private fb:FormBuilder) { 
+    this.fomularioCompletado=false;
     this.cursoActual={
       _id:0,nombre:'',promedio:0,notas:[]
     }
@@ -28,6 +30,11 @@ export class CursoActualScreenComponent implements OnInit {
       nombre:[this.cursoActual.nombre,[]]
     });
     this.idGenerador=0;
+    this.cursoActual.notas.forEach((valor, índice) => {
+      valor._id=this.idGenerador;
+      this.idGenerador++;
+    });
+    
   }
 
   ngOnInit(): void {
@@ -44,6 +51,23 @@ export class CursoActualScreenComponent implements OnInit {
     this.listaNotas=this.listaNotas.filter( x => x._id!=idNota);
   }
   validar(){
-
+    let countPorcentaje=0;
+    let nuevaNota:Array<Nota>=[];
+    if(this.listaNotas.length>0){
+      this.listaNotas.forEach((valor, índice) => {
+        countPorcentaje+=Number(valor.porcentaje);
+        nuevaNota.push({_id:0,nota:Number(valor.nota),porcentaje:Number(valor.porcentaje)});
+      });
+      if(countPorcentaje==1){
+        console.log(nuevaNota);
+        this.cursoservicio.UpdateCurso(this.cursoActual._id, this.formulario.controls['nombre'].value, 0,nuevaNota);
+        this.fomularioCompletado=true;
+      }else{
+        alert("Los porcentajes deben sumar 1");
+      }
+      return;
+    }
+    alert("Agrega notas al curso");
   }
 }
+

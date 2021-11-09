@@ -44,4 +44,11 @@ export class CursoServiceService {
     }
     return false;
   }
+  public UpdateCurso(idCurso:number,nombre:string,promedio:number,nuevaNota:Array<Nota>){
+    // console.log(nuevaNota);
+    let nuevoCurso:Curso={_id:idCurso, nombre:nombre, promedio:promedio, notas:nuevaNota};
+    let curso:any=this.listaCurso.find(obj=>obj._id==idCurso);
+    curso.notas=nuevaNota;
+    curso=nuevoCurso;
+  }
 }
